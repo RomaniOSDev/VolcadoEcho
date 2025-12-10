@@ -43,6 +43,9 @@ struct DoubleEchoView: View {
     @State private var selectedFieldSize: FieldSize?
     @State private var fieldSizeRows: Int = 2
     @State private var fieldSizeCols: Int = 2
+    @State private var level: Int = 1
+    @State private var timeLeft: Int = 60 // Время в секундах
+    @State private var gameTimer: Timer?
     
     private let availableSizes: [FieldSize] = [
         FieldSize(rows: 2, cols: 2, totalCards: 4),
@@ -59,16 +62,34 @@ struct DoubleEchoView: View {
         ZStack {
             BackMainView()
                 .ignoresSafeArea()
-            
-            switch gameState {
-            case .fieldSizeSelection:
-                fieldSizeSelectionScreen
-            case .playing:
-                gameScreen
-            case .gameOver:
-                gameOverScreen
+            VStack{
+                HStack {
+                    Button {
+                        stopTimer()
+                        dismiss()
+                    } label: {
+                        Image(.backBTN)
+                            .resizable()
+                            .frame(width: 56, height: 56)
+                    }
+                    .padding()
+                    Spacer()
+                }
+                
+                .background {
+                    LinearGradient(colors: [.startMianGradient, .endMaingradient], startPoint: .top, endPoint: .bottom)
+                }
+                switch gameState {
+                case .fieldSizeSelection:
+                    fieldSizeSelectionScreen
+                case .playing:
+                    gameScreen
+                case .gameOver:
+                    gameOverScreen
+                }
             }
         }
+        .navigationBarBackButtonHidden()
         .onAppear {
             // Загружаем рекорд для первого размера по умолчанию
             if let firstSize = availableSizes.first {
@@ -80,25 +101,52 @@ struct DoubleEchoView: View {
     // MARK: - Field Size Selection Screen
     var fieldSizeSelectionScreen: some View {
         VStack(spacing: 30) {
+            
+            
             // Рекорд вверху
             VStack(spacing: 10) {
-                Text("Рекорд")
+                Text("Records")
                     .foregroundStyle(.yellowApp)
                     .font(.title2)
                 
-                Text("\(record)")
-                    .foregroundStyle(.yellowApp)
-                    .font(.system(size: 50, weight: .bold))
+                HStack {
+                    Spacer()
+                    Text("\(record)")
+                        .foregroundStyle(.yellowApp)
+                        .font(.system(size: 50, weight: .bold))
+                    Spacer()
+                }
             }
             .padding()
             .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(Color.pinkApp.opacity(0.3))
+                ZStack {
+                    // Внешний градиент для выпуклости
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(
+                            LinearGradient(
+                                gradient: Gradient(colors: [
+                                    Color.pinkApp,
+                                    Color.pinkApp
+                                ]),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .shadow(color: Color.pinkApp.opacity(0.2), radius: 5, x: -5, y: -5) // Тень для выпуклости
+                        .shadow(color: Color.pinkApp.opacity(0.2), radius: 5, x: 5, y: 5) // Тень для углубления
+                    
+                    // Внутренний фон для TextField
+                    RoundedRectangle(cornerRadius: 20)
+                        .foregroundStyle(.endMaingradient)
+                       // .padding(2)
+            
+               }
             )
+            .padding()
             
             // Выбор размера поля
             VStack(spacing: 20) {
-                Text("Выберите размер поля")
+                Text("Field size")
                     .foregroundStyle(.yellowApp)
                     .font(.title2.bold())
                 
@@ -122,48 +170,29 @@ struct DoubleEchoView: View {
                 }
             }
             
-            Button {
-                dismiss()
-            } label: {
-                Image(.backBTN)
-                    .resizable()
-                    .frame(width: 56, height: 56)
-            }
+            
             
             Spacer()
         }
-        .padding()
+        
     }
     
     // MARK: - Game Screen
     var gameScreen: some View {
         VStack(spacing: 20) {
-            // Top bar
-            HStack {
-                Button {
-                    stopGame()
-                    gameState = .fieldSizeSelection
-                } label: {
-                    Image(.backBTN)
-                        .resizable()
-                        .frame(width: 56, height: 56)
-                }
-                
-                Spacer()
-                
-                VStack {
-                    Text("Ходы: \(moves)")
-                        .foregroundStyle(.yellowApp)
-                        .font(.title3.bold())
-                    Text("Пары: \(pairsFound)/\(totalPairs)")
-                        .foregroundStyle(.yellowApp)
-                        .font(.headline)
-                }
+            VStack(spacing: 10) {
+                Text("Level: \(level)")
+                    .foregroundStyle(.yellowApp)
+                    .font(.title2.bold())
+                Text("Time left: \(formatTime(timeLeft))")
+                    .foregroundStyle(.yellowApp)
+                    .font(.title2.bold())
             }
             .padding()
             
             // Игровое поле
             VStack(spacing: 10) {
+                Spacer()
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: fieldSizeCols), spacing: 8) {
                     ForEach(cards) { card in
                         CardView(card: card)
@@ -173,13 +202,8 @@ struct DoubleEchoView: View {
                     }
                 }
                 .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(Color.pinkApp.opacity(0.2))
-                )
+                
             }
-            .padding(.horizontal)
-            
             Spacer()
         }
     }
@@ -213,6 +237,8 @@ struct DoubleEchoView: View {
             }
             
             Button {
+                stopTimer()
+                level = 1
                 gameState = .fieldSizeSelection
                 resetGame()
             } label: {
@@ -246,10 +272,7 @@ struct DoubleEchoView: View {
         }
         
         var body: some View {
-            ZStack {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.pinkApp.opacity(0.3))
-                    .frame(height: 80)
+            
                 
                 if card.isMatched {
                     // Карта найдена - показываем картинку
@@ -272,19 +295,21 @@ struct DoubleEchoView: View {
                         .padding(8)
                 }
             }
-        }
+        
     }
     
     // MARK: - Game Logic
     func startGame() {
         guard let size = selectedFieldSize else { return }
+        level = 1 // Сбрасываем уровень при начале новой игры
         resetGame()
         gameState = .playing
         setupCards(for: size)
+        startTimer()
     }
     
     func stopGame() {
-        // Остановка игры если нужно
+        stopTimer()
     }
     
     func resetGame() {
@@ -294,6 +319,39 @@ struct DoubleEchoView: View {
         selectedCard1 = nil
         selectedCard2 = nil
         canSelect = true
+        // Время зависит от уровня - чем выше уровень, тем меньше времени
+        // Начинаем с 90 секунд, уменьшаем на 5 секунд каждый уровень (минимум 30 секунд)
+        timeLeft = max(30, 90 - (level - 1) * 5)
+    }
+    
+    func startTimer() {
+        stopTimer() // Убеждаемся, что предыдущий таймер остановлен
+        gameTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            if self.timeLeft > 0 {
+                self.timeLeft -= 1
+            } else {
+                // Время вышло
+                self.stopTimer()
+                self.gameOver()
+            }
+        }
+    }
+    
+    func stopTimer() {
+        gameTimer?.invalidate()
+        gameTimer = nil
+    }
+    
+    func formatTime(_ seconds: Int) -> String {
+        let minutes = seconds / 60
+        let secs = seconds % 60
+        return String(format: "%d:%02d", minutes, secs)
+    }
+    
+    func gameOver() {
+        stopTimer()
+        gameState = .gameOver
+        updateRecord()
     }
     
     func setupCards(for size: FieldSize) {
@@ -355,9 +413,9 @@ struct DoubleEchoView: View {
                 pairsFound += 1
                 
                 if pairsFound >= totalPairs {
-                    // Игра завершена
+                    // Игра завершена - переходим на следующий уровень
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        endGame()
+                        levelCompleted()
                     }
                 } else {
                     canSelect = true
@@ -387,7 +445,17 @@ struct DoubleEchoView: View {
         }
     }
     
+    func levelCompleted() {
+        // Увеличиваем уровень и начинаем новую игру
+        level += 1
+        guard let size = selectedFieldSize else { return }
+        resetGame()
+        setupCards(for: size)
+        startTimer()
+    }
+    
     func endGame() {
+        stopTimer()
         gameState = .gameOver
         updateRecord()
     }
