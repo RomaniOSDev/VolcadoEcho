@@ -1,17 +1,16 @@
 //
-//  Untitled.swift
+//  AchivmentScoreView.swift
 //  VolcadoEcho
 //
-//  Created by Роман Главацкий on 08.12.2025.
+//  Created by Роман Главацкий on 11.12.2025.
 //
 
 import SwiftUI
 
-struct BackForMainButton: View {
-    var height: CGFloat = 55
-    var text: String
-    var iconString: String
-    var isAlert: Bool = false
+struct AchivmentScoreView: View {
+    @StateObject private var achievementManager = AchievementManager.shared
+    var score: Int
+    
     var body: some View {
         ZStack {
             // Внешний градиент для выпуклости
@@ -31,21 +30,22 @@ struct BackForMainButton: View {
             
             // Внутренний фон для TextField
             RoundedRectangle(cornerRadius: 20)
-                .foregroundStyle(isAlert ? .endMaingradient : .yellowApp)
+                .foregroundStyle(.yellowApp)
                // .padding(2)
             HStack{
-                Image(systemName: iconString)
-                Text(text).bold()
-                Image(systemName: iconString)
+                Image(systemName: "cup.and.saucer.fill")
+                Text("\(achievementManager.unlockedCount)/23").bold()
+                
             }
-            .foregroundStyle(isAlert ? .yellowApp : .endMaingradient)
-                .font(.system(size: height / 2.2 ))
+            .foregroundStyle(.endMaingradient)
+                .font(.system(size: 22 ))
         
     
-       }.frame(height: height)
+       }.frame(height: 58)
+            .frame(width: 130)
     }
 }
 
 #Preview {
-    BackForMainButton(text: "Policy", iconString: "star.fill", isAlert: false)
+    AchivmentScoreView(score: 0)
 }

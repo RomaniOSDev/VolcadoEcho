@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MainMenuView: View {
+    @State private var showSettings = false
+    
     var body: some View {
         NavigationStack {
             ZStack{
@@ -18,7 +20,13 @@ struct MainMenuView: View {
                     HStack{
                         Spacer()
                         NavigationLink {
-                            Settingsview()
+                            AchivmentsView()
+                        } label: {
+                            AchivmentScoreView(score: 0)
+                        }
+
+                        Button {
+                            showSettings = true
                         } label: {
                             Image(.settingsbuttin)
                                 .resizable()
@@ -53,6 +61,11 @@ struct MainMenuView: View {
                     }
                     Spacer()
                 }.padding()
+            }
+            .overlay {
+                if showSettings {
+                    Settingsview(isPresented: $showSettings)
+                }
             }
         }
     }

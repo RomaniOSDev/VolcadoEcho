@@ -24,6 +24,7 @@ struct FallingItem: Identifiable {
 
 struct EchoDropView: View {
     @Environment(\.dismiss) var dismiss
+    @StateObject private var achievementManager = AchievementManager.shared
     @State private var gameState: GameState = .start
     @State private var score: Int = 0
     @State private var lives: Int = 3
@@ -34,6 +35,10 @@ struct EchoDropView: View {
     @State private var screenSize: CGSize = .zero
     @State private var fallSpeed: CGFloat = 3.0
     @State private var lastSpeedLevel: Int = 0
+    
+    // Achievement tracking
+    @State private var bombsCaughtThisGame: Int = 0
+    @State private var itemsCaughtThisGame: Int = 0
     
     private let itemTypes: [(name: String, points: Int, restoresLife: Bool, removesLife: Bool)] = [
         ("coin1", 1, false, false),
@@ -53,15 +58,72 @@ struct EchoDropView: View {
         ZStack {
             BackMainView()
                 .ignoresSafeArea()
-            
-            switch gameState {
-            case .start:
-                startScreen
-            case .playing:
-                gameScreen
-            case .gameOver:
-                gameOverScreen
+            VStack{
+                HStack {
+                    Button {
+                        dismiss()
+                        if gameState == .playing {
+                            stopGame()
+                            gameState = .start
+                        }
+                    } label: {
+                        Image(.backBTN)
+                            .resizable()
+                            .frame(width: 56, height: 56)
+                    }
+                    .padding()
+                    Text("Echo Drop")
+                        .foregroundStyle(.yellowApp)
+                        .font(Font.title.bold())
+                    Spacer()
+                    
+                    if gameState == .playing {
+                        // Lives indicator
+                        HStack(spacing: 8) {
+                            ForEach(0..<3) { index in
+                                Image(.vulcan2)
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                                    .opacity(index < lives ? 1 : 0.3)
+                            }
+                        }.padding()
+                    }
+                }
+                
+                .background {
+                    LinearGradient(colors: [.startMianGradient, .endMaingradient], startPoint: .top, endPoint: .bottom)
+                }
+                
+                switch gameState {
+                case .start:
+                    startScreen
+                case .playing:
+                    gameScreen
+                case .gameOver:
+                    gameOverScreen
+                }
+                
+                if gameState == .playing {
+                    // Score display
+                    HStack {
+                        VStack {
+                            Text("Score")
+                            Text("\(score)")
+                                
+                                                            
+                        }
+                        .foregroundStyle(.yellowApp)
+                        .font(.system(size: 24, weight: .bold))
+                        .padding()
+                       Spacer()
+                    }
+                    .background {
+                        LinearGradient(colors: [.startMianGradient, .endMaingradient], startPoint: .top, endPoint: .bottom)
+                    }
+                }
+                
             }
+            .navigationBarBackButtonHidden()
         }
         .onAppear {
             loadRecord()
@@ -71,24 +133,30 @@ struct EchoDropView: View {
     // MARK: - Start Screen
     var startScreen: some View {
         VStack(spacing: 40) {
-            Text("Echo Drop")
-                .foregroundStyle(.yellowApp)
-                .font(Font.largeTitle.bold())
+            
             
             VStack(spacing: 20) {
-                Text("Рекорд")
-                    .foregroundStyle(.yellowApp)
-                    .font(.title2)
+                HStack {
+                    Spacer()
+                    Text("Records")
+                        .foregroundStyle(.yellowApp)
+                        .font(.title2)
+                    Spacer()
+                }
                 
                 Text("\(record)")
                     .foregroundStyle(.yellowApp)
                     .font(.system(size: 60, weight: .bold))
             }
+            .shadow(color: .pinkApp, radius: 3)
             .padding()
             .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(Color.pinkApp.opacity(0.3))
+                RoundedRectangle(cornerRadius: 30)
+                    .foregroundStyle(.endMaingradient)
+                    .shadow(color: .pinkApp, radius: 5)
+                    
             )
+            
             
             Button {
                 startGame()
@@ -101,13 +169,6 @@ struct EchoDropView: View {
                 .padding(.horizontal, 40)
             }
             
-            Button {
-                dismiss()
-            } label: {
-                Image(.backBTN)
-                    .resizable()
-                    .frame(width: 56, height: 56)
-            }
             
             Spacer()
         }
@@ -118,50 +179,6 @@ struct EchoDropView: View {
     var gameScreen: some View {
         GeometryReader { geometry in
             ZStack {
-                // Top bar
-                VStack {
-                    HStack {
-                        Button {
-                            stopGame()
-                            gameState = .start
-                        } label: {
-                            Image(.backBTN)
-                                .resizable()
-                                .frame(width: 56, height: 56)
-                        }
-                        
-                        Spacer()
-                        
-                        // Lives indicator
-                        HStack(spacing: 8) {
-                            ForEach(0..<3) { index in
-                                Image(.vulcan2)
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                                    .opacity(index < lives ? 1 : 0.3)
-                            }
-                        }
-                    }
-                    .padding()
-                    
-                    Spacer()
-                }
-                
-                // Score display
-                VStack {
-                    Text("\(score)")
-                        .foregroundStyle(.yellowApp)
-                        .font(.system(size: 50, weight: .bold))
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 15)
-                                .fill(Color.pinkApp.opacity(0.3))
-                        )
-                        .padding(.top, 80)
-                    
-                    Spacer()
-                }
-                
                 // Falling items
                 ForEach(fallingItems) { item in
                     Image(item.imageName)
@@ -190,7 +207,7 @@ struct EchoDropView: View {
                 .font(Font.largeTitle.bold())
             
             VStack(spacing: 20) {
-                Text("Ваш счет")
+                Text("Your Score")
                     .foregroundStyle(.yellowApp)
                     .font(.title2)
                 
@@ -205,7 +222,7 @@ struct EchoDropView: View {
             )
             
             if score == record && score > 0 {
-                Text("Новый рекорд!")
+                Text("New Record!")
                     .foregroundStyle(.yellowApp)
                     .font(.title.bold())
             }
@@ -215,7 +232,7 @@ struct EchoDropView: View {
                 resetGame()
             } label: {
                 BackForMainButton(
-                    text: "Играть снова",
+                    text: "Play Again",
                     iconString: "arrow.clockwise",
                     isAlert: false
                 )
@@ -239,6 +256,11 @@ struct EchoDropView: View {
     func startGame() {
         resetGame()
         gameState = .playing
+        bombsCaughtThisGame = 0
+        itemsCaughtThisGame = 0
+        
+        // Track game played
+        achievementManager.trackGamePlayed(gameMode: "EchoDrop")
         
         // Небольшая задержка, чтобы размер экрана успел определиться
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -290,6 +312,8 @@ struct EchoDropView: View {
         fallingItems = []
         fallSpeed = 3.0
         lastSpeedLevel = 0
+        bombsCaughtThisGame = 0
+        itemsCaughtThisGame = 0
         stopGame()
     }
     
@@ -344,12 +368,55 @@ struct EchoDropView: View {
         // Handle item effects
         if item.restoresLife {
             lives = min(lives + 1, 3)
+            itemsCaughtThisGame += 1
+            
+            // First Catch achievement
+            achievementManager.unlock(.firstCatch)
+            
+            // Track total items collected
+            let totalItems = UserDefaults.standard.integer(forKey: "totalItemsCollected")
+            UserDefaults.standard.set(totalItems + 1, forKey: "totalItemsCollected")
+            if totalItems + 1 >= 150 {
+                achievementManager.unlock(.lavaCollector)
+            }
         } else if item.removesLife {
             // Бомба забирает жизнь только при нажатии
+            bombsCaughtThisGame += 1
             lives -= 1
+            
+            // Ash Mistake achievement
+            if bombsCaughtThisGame >= 5 {
+                achievementManager.unlock(.ashMistake)
+            }
+            
             checkGameOver()
         } else {
+            itemsCaughtThisGame += 1
             score += item.points
+            
+            // First Catch achievement
+            achievementManager.unlock(.firstCatch)
+            
+            // Track total items collected
+            let totalItems = UserDefaults.standard.integer(forKey: "totalItemsCollected")
+            UserDefaults.standard.set(totalItems + 1, forKey: "totalItemsCollected")
+            if totalItems + 1 >= 150 {
+                achievementManager.unlock(.lavaCollector)
+            }
+            
+            // Check score achievements
+            if score >= 2000 {
+                achievementManager.unlock(.echoAvalanche)
+            }
+            if score >= 10000 {
+                achievementManager.unlock(.masterOfFalls)
+            }
+            
+            // Volcado Never Gives Up - score 500 with one life
+            if lives == 1 && score >= 500 {
+                achievementManager.unlock(.volcadoNeverGivesUp)
+            }
+            
             // Увеличиваем скорость каждые 200 очков
             updateFallSpeed()
         }

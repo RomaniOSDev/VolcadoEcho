@@ -36,6 +36,7 @@ struct QuizQuestion {
 
 struct VolcadoQuizView: View {
     @Environment(\.dismiss) var dismiss
+    @StateObject private var achievementManager = AchievementManager.shared
     @State private var gameState: QuizGameState = .difficultySelection
     @State private var selectedDifficulty: QuizDifficulty = .easy
     @State private var currentQuestionIndex: Int = 0
@@ -44,6 +45,11 @@ struct VolcadoQuizView: View {
     @State private var showAnswer: Bool = false
     @State private var questions: [QuizQuestion] = []
     @State private var record: Int = 0
+    
+    // Achievement tracking
+    @State private var consecutiveCorrectAnswers: Int = 0
+    @State private var consecutiveWrongAnswers: Int = 0
+    @State private var hasMistakesInQuiz: Bool = false
     
     var body: some View {
         ZStack {
@@ -306,6 +312,12 @@ struct VolcadoQuizView: View {
         questions = getQuestions(for: difficulty)
         questions.shuffle()
         gameState = .playing
+        hasMistakesInQuiz = false
+        consecutiveCorrectAnswers = UserDefaults.standard.integer(forKey: "consecutiveCorrectAnswers")
+        consecutiveWrongAnswers = 0
+        
+        // Track game played
+        achievementManager.trackGamePlayed(gameMode: "VolcadoQuiz")
     }
     
     func stopQuiz() {
@@ -318,11 +330,38 @@ struct VolcadoQuizView: View {
         selectedAnswer = nil
         showAnswer = false
         questions = []
+        hasMistakesInQuiz = false
+        consecutiveWrongAnswers = 0
     }
     
     func checkAnswer(_ answerIndex: Int) {
-        if answerIndex == questions[currentQuestionIndex].correctAnswer {
+        let isCorrect = answerIndex == questions[currentQuestionIndex].correctAnswer
+        
+        if isCorrect {
             score += 1
+            consecutiveCorrectAnswers += 1
+            consecutiveWrongAnswers = 0
+            
+            // First Answer achievement
+            achievementManager.unlock(.firstAnswer)
+            
+            // Volcado Genius - 10 correct in a row
+            if consecutiveCorrectAnswers >= 10 {
+                achievementManager.unlock(.volcadoGenius)
+            }
+            
+            // Save consecutive correct answers
+            UserDefaults.standard.set(consecutiveCorrectAnswers, forKey: "consecutiveCorrectAnswers")
+        } else {
+            hasMistakesInQuiz = true
+            consecutiveWrongAnswers += 1
+            consecutiveCorrectAnswers = 0
+            UserDefaults.standard.set(0, forKey: "consecutiveCorrectAnswers")
+            
+            // Ashes of Knowledge - 5 wrong in a row
+            if consecutiveWrongAnswers >= 5 {
+                achievementManager.unlock(.ashesOfKnowledge)
+            }
         }
         
         // Переходим к следующему вопросу
@@ -341,6 +380,30 @@ struct VolcadoQuizView: View {
     func endQuiz() {
         gameState = .results
         updateRecord()
+        
+        // Didn't Burn Out! - complete quiz without mistakes
+        if !hasMistakesInQuiz {
+            achievementManager.unlock(.didntBurnOut)
+        }
+        
+        // Fiery Mind - complete Hard difficulty quiz
+        if selectedDifficulty == .hard {
+            achievementManager.unlock(.fieryMind)
+        }
+        
+        // Lava Logic - answer all correctly on all difficulty levels
+        if score == questions.count {
+            let key = "perfectQuiz_\(selectedDifficulty.displayName)"
+            UserDefaults.standard.set(true, forKey: key)
+            
+            let easyPerfect = UserDefaults.standard.bool(forKey: "perfectQuiz_Easy")
+            let mediumPerfect = UserDefaults.standard.bool(forKey: "perfectQuiz_Medium")
+            let hardPerfect = UserDefaults.standard.bool(forKey: "perfectQuiz_Hard")
+            
+            if easyPerfect && mediumPerfect && hardPerfect {
+                achievementManager.unlock(.lavaLogic)
+            }
+        }
     }
     
     func loadRecord() {

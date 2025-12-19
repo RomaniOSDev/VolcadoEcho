@@ -3,29 +3,53 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 60;
 	objects = {
+
+/* Begin PBXBuildFile section */
+		741B2CC62EF5EBDA00E6599F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 741B2CBC2EF5EBDA00E6599F /* Assets.xcassets */; };
+		741B2CC82EF5EBDA00E6599F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 741B2CC02EF5EBDA00E6599F /* LaunchScreen.storyboard */; };
+		741B2CC92EF5EBDA00E6599F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 741B2CC22EF5EBDA00E6599F /* Main.storyboard */; };
+		741B2CCA2EF5EBDA00E6599F /* AchievementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741B2CA92EF5EBDA00E6599F /* AchievementManager.swift */; };
+		741B2CCB2EF5EBDA00E6599F /* AchivmentScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741B2CAA2EF5EBDA00E6599F /* AchivmentScoreView.swift */; };
+		741B2CCC2EF5EBDA00E6599F /* BackForMainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741B2CAB2EF5EBDA00E6599F /* BackForMainButton.swift */; };
+		741B2CCD2EF5EBDA00E6599F /* BackMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741B2CAC2EF5EBDA00E6599F /* BackMainView.swift */; };
+		741B2CCE2EF5EBDA00E6599F /* AchivmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741B2CAE2EF5EBDA00E6599F /* AchivmentsView.swift */; };
+		741B2CCF2EF5EBDA00E6599F /* DoubleEchoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741B2CB02EF5EBDA00E6599F /* DoubleEchoView.swift */; };
+		741B2CD02EF5EBDA00E6599F /* EchoDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741B2CB22EF5EBDA00E6599F /* EchoDropView.swift */; };
+		741B2CD12EF5EBDA00E6599F /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741B2CB42EF5EBDA00E6599F /* MainMenuView.swift */; };
+		741B2CD22EF5EBDA00E6599F /* Settingsview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741B2CB62EF5EBDA00E6599F /* Settingsview.swift */; };
+		741B2CD32EF5EBDA00E6599F /* VolcadoQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741B2CB82EF5EBDA00E6599F /* VolcadoQuizView.swift */; };
+		741B2CD42EF5EBDA00E6599F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741B2CBB2EF5EBDA00E6599F /* AppDelegate.swift */; };
+		741B2CD52EF5EBDA00E6599F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741B2CBD2EF5EBDA00E6599F /* ContentView.swift */; };
+		741B2CD62EF5EBDA00E6599F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741B2CC32EF5EBDA00E6599F /* SceneDelegate.swift */; };
+		741B2CD72EF5EBDA00E6599F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741B2CC42EF5EBDA00E6599F /* ViewController.swift */; };
+/* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		23E4A2B29AEDD6E9C8F9763F /* Pods-VolcadoEcho.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VolcadoEcho.release.xcconfig"; path = "Target Support Files/Pods-VolcadoEcho/Pods-VolcadoEcho.release.xcconfig"; sourceTree = "<group>"; };
+		741B2CA92EF5EBDA00E6599F /* AchievementManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementManager.swift; sourceTree = "<group>"; };
+		741B2CAA2EF5EBDA00E6599F /* AchivmentScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchivmentScoreView.swift; sourceTree = "<group>"; };
+		741B2CAB2EF5EBDA00E6599F /* BackForMainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackForMainButton.swift; sourceTree = "<group>"; };
+		741B2CAC2EF5EBDA00E6599F /* BackMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackMainView.swift; sourceTree = "<group>"; };
+		741B2CAE2EF5EBDA00E6599F /* AchivmentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchivmentsView.swift; sourceTree = "<group>"; };
+		741B2CB02EF5EBDA00E6599F /* DoubleEchoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleEchoView.swift; sourceTree = "<group>"; };
+		741B2CB22EF5EBDA00E6599F /* EchoDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EchoDropView.swift; sourceTree = "<group>"; };
+		741B2CB42EF5EBDA00E6599F /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
+		741B2CB62EF5EBDA00E6599F /* Settingsview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settingsview.swift; sourceTree = "<group>"; };
+		741B2CB82EF5EBDA00E6599F /* VolcadoQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolcadoQuizView.swift; sourceTree = "<group>"; };
+		741B2CBB2EF5EBDA00E6599F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		741B2CBC2EF5EBDA00E6599F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		741B2CBD2EF5EBDA00E6599F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		741B2CBE2EF5EBDA00E6599F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		741B2CBF2EF5EBDA00E6599F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		741B2CC12EF5EBDA00E6599F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		741B2CC32EF5EBDA00E6599F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		741B2CC42EF5EBDA00E6599F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		74EE732C2EE703AE00711127 /* VolcadoEcho.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VolcadoEcho.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9954AD4118AF6AE01989EEA2 /* Pods-VolcadoEcho.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VolcadoEcho.debug.xcconfig"; path = "Target Support Files/Pods-VolcadoEcho/Pods-VolcadoEcho.debug.xcconfig"; sourceTree = "<group>"; };
 		AC124BF792C00AAEA7D304F2 /* Pods_VolcadoEcho.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VolcadoEcho.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		74EE73692EE704B500711127 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 74EE732B2EE703AE00711127 /* VolcadoEcho */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		74EE73612EE704B500711127 /* VolcadoEcho */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (74EE73692EE704B500711127 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = VolcadoEcho; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		74EE73292EE703AE00711127 /* Frameworks */ = {
@@ -55,10 +79,99 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		741B2CAD2EF5EBDA00E6599F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				741B2CA92EF5EBDA00E6599F /* AchievementManager.swift */,
+				741B2CAA2EF5EBDA00E6599F /* AchivmentScoreView.swift */,
+				741B2CAB2EF5EBDA00E6599F /* BackForMainButton.swift */,
+				741B2CAC2EF5EBDA00E6599F /* BackMainView.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		741B2CAF2EF5EBDA00E6599F /* Achivment */ = {
+			isa = PBXGroup;
+			children = (
+				741B2CAE2EF5EBDA00E6599F /* AchivmentsView.swift */,
+			);
+			path = Achivment;
+			sourceTree = "<group>";
+		};
+		741B2CB12EF5EBDA00E6599F /* DoubleEcho */ = {
+			isa = PBXGroup;
+			children = (
+				741B2CB02EF5EBDA00E6599F /* DoubleEchoView.swift */,
+			);
+			path = DoubleEcho;
+			sourceTree = "<group>";
+		};
+		741B2CB32EF5EBDA00E6599F /* EchoDrop */ = {
+			isa = PBXGroup;
+			children = (
+				741B2CB22EF5EBDA00E6599F /* EchoDropView.swift */,
+			);
+			path = EchoDrop;
+			sourceTree = "<group>";
+		};
+		741B2CB52EF5EBDA00E6599F /* MainMenu */ = {
+			isa = PBXGroup;
+			children = (
+				741B2CB42EF5EBDA00E6599F /* MainMenuView.swift */,
+			);
+			path = MainMenu;
+			sourceTree = "<group>";
+		};
+		741B2CB72EF5EBDA00E6599F /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				741B2CB62EF5EBDA00E6599F /* Settingsview.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		741B2CB92EF5EBDA00E6599F /* Volcado Quiz */ = {
+			isa = PBXGroup;
+			children = (
+				741B2CB82EF5EBDA00E6599F /* VolcadoQuizView.swift */,
+			);
+			path = "Volcado Quiz";
+			sourceTree = "<group>";
+		};
+		741B2CBA2EF5EBDA00E6599F /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				741B2CAF2EF5EBDA00E6599F /* Achivment */,
+				741B2CB12EF5EBDA00E6599F /* DoubleEcho */,
+				741B2CB32EF5EBDA00E6599F /* EchoDrop */,
+				741B2CB52EF5EBDA00E6599F /* MainMenu */,
+				741B2CB72EF5EBDA00E6599F /* Settings */,
+				741B2CB92EF5EBDA00E6599F /* Volcado Quiz */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		741B2CC52EF5EBDA00E6599F /* VolcadoEcho */ = {
+			isa = PBXGroup;
+			children = (
+				741B2CAD2EF5EBDA00E6599F /* Helpers */,
+				741B2CBA2EF5EBDA00E6599F /* Screens */,
+				741B2CBB2EF5EBDA00E6599F /* AppDelegate.swift */,
+				741B2CBC2EF5EBDA00E6599F /* Assets.xcassets */,
+				741B2CBD2EF5EBDA00E6599F /* ContentView.swift */,
+				741B2CBE2EF5EBDA00E6599F /* Info.plist */,
+				741B2CC02EF5EBDA00E6599F /* LaunchScreen.storyboard */,
+				741B2CC22EF5EBDA00E6599F /* Main.storyboard */,
+				741B2CC32EF5EBDA00E6599F /* SceneDelegate.swift */,
+				741B2CC42EF5EBDA00E6599F /* ViewController.swift */,
+			);
+			path = VolcadoEcho;
+			sourceTree = "<group>";
+		};
 		74EE73232EE703AE00711127 = {
 			isa = PBXGroup;
 			children = (
-				74EE73612EE704B500711127 /* VolcadoEcho */,
+				741B2CC52EF5EBDA00E6599F /* VolcadoEcho */,
 				74EE732D2EE703AE00711127 /* Products */,
 				374ACC23CBC4A7370BACE5E2 /* Pods */,
 				05C5EC2F901F7F736D113B23 /* Frameworks */,
@@ -88,9 +201,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				74EE73612EE704B500711127 /* VolcadoEcho */,
 			);
 			name = VolcadoEcho;
 			productName = VolcadoEcho;
@@ -135,6 +245,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				741B2CC62EF5EBDA00E6599F /* Assets.xcassets in Resources */,
+				741B2CC82EF5EBDA00E6599F /* LaunchScreen.storyboard in Resources */,
+				741B2CC92EF5EBDA00E6599F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,10 +283,43 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				741B2CCA2EF5EBDA00E6599F /* AchievementManager.swift in Sources */,
+				741B2CCB2EF5EBDA00E6599F /* AchivmentScoreView.swift in Sources */,
+				741B2CCC2EF5EBDA00E6599F /* BackForMainButton.swift in Sources */,
+				741B2CCD2EF5EBDA00E6599F /* BackMainView.swift in Sources */,
+				741B2CCE2EF5EBDA00E6599F /* AchivmentsView.swift in Sources */,
+				741B2CCF2EF5EBDA00E6599F /* DoubleEchoView.swift in Sources */,
+				741B2CD02EF5EBDA00E6599F /* EchoDropView.swift in Sources */,
+				741B2CD12EF5EBDA00E6599F /* MainMenuView.swift in Sources */,
+				741B2CD22EF5EBDA00E6599F /* Settingsview.swift in Sources */,
+				741B2CD32EF5EBDA00E6599F /* VolcadoQuizView.swift in Sources */,
+				741B2CD42EF5EBDA00E6599F /* AppDelegate.swift in Sources */,
+				741B2CD52EF5EBDA00E6599F /* ContentView.swift in Sources */,
+				741B2CD62EF5EBDA00E6599F /* SceneDelegate.swift in Sources */,
+				741B2CD72EF5EBDA00E6599F /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		741B2CC02EF5EBDA00E6599F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				741B2CBF2EF5EBDA00E6599F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		741B2CC22EF5EBDA00E6599F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				741B2CC12EF5EBDA00E6599F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		74EE73402EE703AF00711127 /* Debug */ = {
@@ -186,6 +332,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VolcadoEcho/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VolcadoEcho;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -196,7 +343,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = home.VolcadoEcho;
+				PRODUCT_BUNDLE_IDENTIFIER = com.volcado234324.2345;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -222,6 +369,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VolcadoEcho/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VolcadoEcho;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -232,7 +380,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = home.VolcadoEcho;
+				PRODUCT_BUNDLE_IDENTIFIER = com.volcado234324.2345;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

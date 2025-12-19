@@ -32,6 +32,7 @@ struct Card: Identifiable {
 
 struct DoubleEchoView: View {
     @Environment(\.dismiss) var dismiss
+    @StateObject private var achievementManager = AchievementManager.shared
     @State private var gameState: DoubleEchoGameState = .fieldSizeSelection
     @State private var cards: [Card] = []
     @State private var selectedCard1: Card?
@@ -46,6 +47,11 @@ struct DoubleEchoView: View {
     @State private var level: Int = 1
     @State private var timeLeft: Int = 60 // Время в секундах
     @State private var gameTimer: Timer?
+    
+    // Achievement tracking
+    @State private var levelStartTime: Date?
+    @State private var hasMistakes: Bool = false
+    @State private var consecutiveLevelsCompleted: Int = 0
     
     private let availableSizes: [FieldSize] = [
         FieldSize(rows: 2, cols: 2, totalCards: 4),
@@ -66,6 +72,9 @@ struct DoubleEchoView: View {
                 HStack {
                     Button {
                         stopTimer()
+                        // Reset consecutive levels when leaving the game mode
+                        consecutiveLevelsCompleted = 0
+                        UserDefaults.standard.set(0, forKey: "consecutiveLevelsCompleted_DoubleEcho")
                         dismiss()
                     } label: {
                         Image(.backBTN)
@@ -211,12 +220,12 @@ struct DoubleEchoView: View {
     // MARK: - Game Over Screen
     var gameOverScreen: some View {
         VStack(spacing: 40) {
-            Text("Победа!")
+            Text("Victory!")
                 .foregroundStyle(.yellowApp)
                 .font(Font.largeTitle.bold())
             
             VStack(spacing: 20) {
-                Text("Ходов использовано")
+                Text("Moves Used")
                     .foregroundStyle(.yellowApp)
                     .font(.title2)
                 
@@ -231,7 +240,7 @@ struct DoubleEchoView: View {
             )
             
             if moves == record && record > 0 {
-                Text("Новый рекорд!")
+                Text("New Record!")
                     .foregroundStyle(.yellowApp)
                     .font(.title.bold())
             }
@@ -243,7 +252,7 @@ struct DoubleEchoView: View {
                 resetGame()
             } label: {
                 BackForMainButton(
-                    text: "Играть снова",
+                    text: "Play Again",
                     iconString: "arrow.clockwise",
                     isAlert: false
                 )
@@ -306,6 +315,14 @@ struct DoubleEchoView: View {
         gameState = .playing
         setupCards(for: size)
         startTimer()
+        levelStartTime = Date()
+        hasMistakes = false
+        
+        // Load consecutive levels from UserDefaults
+        consecutiveLevelsCompleted = UserDefaults.standard.integer(forKey: "consecutiveLevelsCompleted_DoubleEcho")
+        
+        // Track game played
+        achievementManager.trackGamePlayed(gameMode: "DoubleEcho")
     }
     
     func stopGame() {
@@ -319,6 +336,7 @@ struct DoubleEchoView: View {
         selectedCard1 = nil
         selectedCard2 = nil
         canSelect = true
+        hasMistakes = false
         // Время зависит от уровня - чем выше уровень, тем меньше времени
         // Начинаем с 90 секунд, уменьшаем на 5 секунд каждый уровень (минимум 30 секунд)
         timeLeft = max(30, 90 - (level - 1) * 5)
@@ -350,6 +368,9 @@ struct DoubleEchoView: View {
     
     func gameOver() {
         stopTimer()
+        // Reset consecutive levels on game over (timeout)
+        consecutiveLevelsCompleted = 0
+        UserDefaults.standard.set(0, forKey: "consecutiveLevelsCompleted_DoubleEcho")
         gameState = .gameOver
         updateRecord()
     }
@@ -412,6 +433,16 @@ struct DoubleEchoView: View {
                 markAsMatched(card2)
                 pairsFound += 1
                 
+                // First Match achievement
+                achievementManager.unlock(.firstMatch)
+                
+                // Track total pairs matched
+                let totalPairs = UserDefaults.standard.integer(forKey: "totalPairsMatched")
+                UserDefaults.standard.set(totalPairs + 1, forKey: "totalPairsMatched")
+                if totalPairs + 1 >= 1000 {
+                    achievementManager.unlock(.pairCollector)
+                }
+                
                 if pairsFound >= totalPairs {
                     // Игра завершена - переходим на следующий уровень
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -422,6 +453,7 @@ struct DoubleEchoView: View {
                 }
             } else {
                 // Не совпали - закрываем карты
+                hasMistakes = true
                 hideCard(card1)
                 hideCard(card2)
                 canSelect = true
@@ -446,12 +478,38 @@ struct DoubleEchoView: View {
     }
     
     func levelCompleted() {
+        // Check achievements
+        if let startTime = levelStartTime {
+            let elapsed = Date().timeIntervalSince(startTime)
+            if elapsed <= 10 {
+                achievementManager.unlock(.fastEcho)
+            }
+        }
+        
+        if !hasMistakes {
+            achievementManager.unlock(.noMistakes)
+        }
+        
+        consecutiveLevelsCompleted += 1
+        UserDefaults.standard.set(consecutiveLevelsCompleted, forKey: "consecutiveLevelsCompleted_DoubleEcho")
+        
+        if consecutiveLevelsCompleted >= 3 {
+            achievementManager.unlock(.fieryFocus)
+        }
+        
+        // Track consecutive levels played (50 levels in a row)
+        if consecutiveLevelsCompleted >= 50 {
+            achievementManager.unlock(.flowOfLava)
+        }
+        
         // Увеличиваем уровень и начинаем новую игру
         level += 1
         guard let size = selectedFieldSize else { return }
         resetGame()
         setupCards(for: size)
         startTimer()
+        levelStartTime = Date()
+        hasMistakes = false
     }
     
     func endGame() {
