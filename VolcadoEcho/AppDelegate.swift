@@ -6,14 +6,23 @@
 //
 
 import UIKit
+import AppsFlyerLib
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var restrictRotation: UIInterfaceOrientationMask = .all
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // AppsFlyer Init
+        AppsFlyerLib.shared().appsFlyerDevKey = "b9yGaBDfPYRyJAypagAN8S"
+        AppsFlyerLib.shared().appleAppID = "6756780582"
+        AppsFlyerLib.shared().delegate = self
+        AppsFlyerLib.shared().isDebug = true
+        AppsFlyerLib.shared().disableAdvertisingIdentifier = true
+        AppsFlyerLib.shared().start()
+
+        
         return true
     }
 

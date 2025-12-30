@@ -24,6 +24,14 @@
 		741B2CD52EF5EBDA00E6599F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741B2CBD2EF5EBDA00E6599F /* ContentView.swift */; };
 		741B2CD62EF5EBDA00E6599F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741B2CC32EF5EBDA00E6599F /* SceneDelegate.swift */; };
 		741B2CD72EF5EBDA00E6599F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741B2CC42EF5EBDA00E6599F /* ViewController.swift */; };
+		74915C862F03224D00E85B00 /* InternetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74915C822F03224D00E85B00 /* InternetViewController.swift */; };
+		74915C872F03224D00E85B00 /* FireBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74915C812F03224D00E85B00 /* FireBaseManager.swift */; };
+		74915C882F03224D00E85B00 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74915C802F03224D00E85B00 /* Extensions.swift */; };
+		74915C892F03224D00E85B00 /* CheckLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74915C7F2F03224D00E85B00 /* CheckLink.swift */; };
+		74915C8B2F03224D00E85B00 /* LoaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74915C832F03224D00E85B00 /* LoaderViewController.swift */; };
+		74915C8E2F0324A000E85B00 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 74915C8D2F0324A000E85B00 /* FirebaseDatabase */; };
+		74915C912F03250500E85B00 /* AppsFlyerLib in Frameworks */ = {isa = PBXBuildFile; productRef = 74915C902F03250500E85B00 /* AppsFlyerLib */; };
+		74915C932F03261D00E85B00 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 74915C922F03261D00E85B00 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +54,12 @@
 		741B2CC12EF5EBDA00E6599F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		741B2CC32EF5EBDA00E6599F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		741B2CC42EF5EBDA00E6599F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		74915C7F2F03224D00E85B00 /* CheckLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckLink.swift; sourceTree = "<group>"; };
+		74915C802F03224D00E85B00 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		74915C812F03224D00E85B00 /* FireBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManager.swift; sourceTree = "<group>"; };
+		74915C822F03224D00E85B00 /* InternetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetViewController.swift; sourceTree = "<group>"; };
+		74915C832F03224D00E85B00 /* LoaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderViewController.swift; sourceTree = "<group>"; };
+		74915C922F03261D00E85B00 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		74EE732C2EE703AE00711127 /* VolcadoEcho.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VolcadoEcho.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9954AD4118AF6AE01989EEA2 /* Pods-VolcadoEcho.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VolcadoEcho.debug.xcconfig"; path = "Target Support Files/Pods-VolcadoEcho/Pods-VolcadoEcho.debug.xcconfig"; sourceTree = "<group>"; };
 		AC124BF792C00AAEA7D304F2 /* Pods_VolcadoEcho.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VolcadoEcho.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74915C8E2F0324A000E85B00 /* FirebaseDatabase in Frameworks */,
+				74915C912F03250500E85B00 /* AppsFlyerLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,6 +163,7 @@
 				741B2CB52EF5EBDA00E6599F /* MainMenu */,
 				741B2CB72EF5EBDA00E6599F /* Settings */,
 				741B2CB92EF5EBDA00E6599F /* Volcado Quiz */,
+				74915C852F03224D00E85B00 /* LoadingView */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -164,8 +181,21 @@
 				741B2CC22EF5EBDA00E6599F /* Main.storyboard */,
 				741B2CC32EF5EBDA00E6599F /* SceneDelegate.swift */,
 				741B2CC42EF5EBDA00E6599F /* ViewController.swift */,
+				74915C922F03261D00E85B00 /* GoogleService-Info.plist */,
 			);
 			path = VolcadoEcho;
+			sourceTree = "<group>";
+		};
+		74915C852F03224D00E85B00 /* LoadingView */ = {
+			isa = PBXGroup;
+			children = (
+				74915C7F2F03224D00E85B00 /* CheckLink.swift */,
+				74915C802F03224D00E85B00 /* Extensions.swift */,
+				74915C812F03224D00E85B00 /* FireBaseManager.swift */,
+				74915C822F03224D00E85B00 /* InternetViewController.swift */,
+				74915C832F03224D00E85B00 /* LoaderViewController.swift */,
+			);
+			path = LoadingView;
 			sourceTree = "<group>";
 		};
 		74EE73232EE703AE00711127 = {
@@ -231,6 +261,10 @@
 				Base,
 			);
 			mainGroup = 74EE73232EE703AE00711127;
+			packageReferences = (
+				74915C8C2F0324A000E85B00 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				74915C8F2F03250500E85B00 /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */,
+			);
 			productRefGroup = 74EE732D2EE703AE00711127 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -246,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				741B2CC62EF5EBDA00E6599F /* Assets.xcassets in Resources */,
+				74915C932F03261D00E85B00 /* GoogleService-Info.plist in Resources */,
 				741B2CC82EF5EBDA00E6599F /* LaunchScreen.storyboard in Resources */,
 				741B2CC92EF5EBDA00E6599F /* Main.storyboard in Resources */,
 			);
@@ -284,6 +319,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				741B2CCA2EF5EBDA00E6599F /* AchievementManager.swift in Sources */,
+				74915C862F03224D00E85B00 /* InternetViewController.swift in Sources */,
+				74915C872F03224D00E85B00 /* FireBaseManager.swift in Sources */,
+				74915C882F03224D00E85B00 /* Extensions.swift in Sources */,
+				74915C892F03224D00E85B00 /* CheckLink.swift in Sources */,
+				74915C8B2F03224D00E85B00 /* LoaderViewController.swift in Sources */,
 				741B2CCB2EF5EBDA00E6599F /* AchivmentScoreView.swift in Sources */,
 				741B2CCC2EF5EBDA00E6599F /* BackForMainButton.swift in Sources */,
 				741B2CCD2EF5EBDA00E6599F /* BackMainView.swift in Sources */,
@@ -342,7 +382,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.volcado234324.2345;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -379,7 +419,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.volcado234324.2345;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -537,6 +577,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		74915C8C2F0324A000E85B00 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.7.0;
+			};
+		};
+		74915C8F2F03250500E85B00 /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppsFlyerSDK/AppsFlyerFramework";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.17.8;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		74915C8D2F0324A000E85B00 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 74915C8C2F0324A000E85B00 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		74915C902F03250500E85B00 /* AppsFlyerLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 74915C8F2F03250500E85B00 /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */;
+			productName = AppsFlyerLib;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 74EE73242EE703AE00711127 /* Project object */;
 }
