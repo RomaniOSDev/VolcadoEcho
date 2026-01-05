@@ -135,7 +135,7 @@ class LoadingSplash: UIViewController {
                     print("✅ Firebase URL доступен, открываем WebView")
                     self.openWebViewWithFirebaseURL(url)
                 } else {
-                    print("❌ Firebase URL недоступен, проверяем резервный URL")
+                    print("❌ Firebase URL недоступен 404")
                     self.showSwiftUIContent()
                 }
             }
